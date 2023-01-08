@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.SplashController">
+   <children>
+      <ImageView fitHeight="610.0" fitWidth="910.0" layoutX="-6.0" layoutY="-5.0" pickOnBounds="true">
+         <image>
+            <Image url="@../pics/startlogo.jpg" />
+         </image>
+      </ImageView>
+      <Text fill="WHITE" layoutX="199.0" layoutY="315.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Assembully Studio" textAlignment="CENTER" wrappingWidth="503.8197326660156">
+         <font>
+            <Font name="Arial Rounded MT Bold" size="50.0" />
+         </font>
+      </Text>
+      <Text fill="WHITE" layoutX="779.0" layoutY="552.0" strokeType="OUTSIDE" strokeWidth="0.0" text="2023" wrappingWidth="79.2083511352539">
+         <font>
+            <Font size="34.0" />
+         </font>
+      </Text>
+   </children>
+</AnchorPane>

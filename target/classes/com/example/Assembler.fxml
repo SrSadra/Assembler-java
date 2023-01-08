@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="900.0" style="-fx-background-color: #424242;" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.AssemblerController">
+   <children>
+      <BorderPane prefHeight="603.0" prefWidth="901.0">
+         <top>
+            <HBox prefHeight="78.0" prefWidth="902.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="53.0" prefWidth="88.0">
+                     <children>
+                        <ImageView fitHeight="52.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true" />
+                        <Text fill="#0009ff" strokeType="OUTSIDE" strokeWidth="0.0" text="AS2023" textAlignment="CENTER" wrappingWidth="87.20341300964355">
+                           <font>
+                              <Font name="System Bold" size="18.0" />
+                           </font>
+                        </Text>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="78.0" prefWidth="813.0">
+                     <children>
+                        <MenuBar prefHeight="30.0" prefWidth="786.0">
+                          <menus>
+                            <Menu mnemonicParsing="false" text="File">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="Close" />
+                              </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Edit">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="Delete" />
+                              </items>
+                            </Menu>
+                            <Menu mnemonicParsing="false" text="Help">
+                              <items>
+                                <MenuItem mnemonicParsing="false" text="About" />
+                              </items>
+                            </Menu>
+                          </menus>
+                        </MenuBar>
+                        <HBox prefHeight="43.0" prefWidth="756.0">
+                           <children>
+                              <HBox prefHeight="43.0" prefWidth="57.0" />
+                              <HBox prefHeight="43.0" prefWidth="144.0">
+                                 <children>
+                                    <Label prefHeight="25.0" prefWidth="25.0" style="-fx-label-padding: 5px;" text="▶" textAlignment="CENTER" textFill="#2bff00">
+                                       <HBox.margin>
+                                          <Insets />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font name="System Bold" size="27.0" />
+                                       </font>
+                                    </Label>
+                                    <MenuButton mnemonicParsing="false" prefHeight="12.0" prefWidth="122.0" style="-fx-background-color: grey;" text="MenuButton" textFill="#0dff00">
+                                      <items>
+                                        <MenuItem mnemonicParsing="false" text="Run" />
+                                        <MenuItem mnemonicParsing="false" onAction="#onDebugClick" text="Debug" />
+                                      </items>
+                                       <HBox.margin>
+                                          <Insets top="8.0" />
+                                       </HBox.margin>
+                                    </MenuButton>
+                                 </children>
+                              </HBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </top>
+         <right>
+            <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER" />
+         </right>
+         <left>
+            <Label prefHeight="18.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
+         </left>
+         <bottom>
+            <HBox prefHeight="144.0" prefWidth="902.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox prefHeight="123.0" prefWidth="131.0" />
+                  <VBox prefHeight="174.0" prefWidth="678.0">
+                     <children>
+                        <Label prefHeight="33.0" prefWidth="671.0" text="Label" />
+                        <Pane prefHeight="126.0" prefWidth="571.0" />
+                     </children>
+                  </VBox>
+               </children></HBox>
+         </bottom>
+         <center>
+            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+              <tabs>
+                <Tab text="Untitled Tab 2">
+                  <content>
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                           <children>
+                              <TextArea fx:id="codeArea" prefHeight="348.0" prefWidth="771.0" />
+                           </children>
+                        </AnchorPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+      <Line endX="800.800048828125" endY="78.13331604003906" startX="1.6276040696538985E-5" startY="78.13331604003906" stroke="#2845e7" strokeWidth="5.0" />
+      <Line endX="869.6000366210938" endY="78.13336181640625" layoutX="32.0" layoutY="375.0" startX="1.6276040696538985E-5" startY="78.13331604003906" stroke="#2845e7" strokeWidth="5.0" />
+   </children>
+</AnchorPane>
