@@ -61,7 +61,7 @@ public class Data {
         return register.get(reg).getRegName();
     }
 
-    public String regValue(String reg){
+    public int[] regValue(String reg){
         int[] value = new int[8];
         if (register.get(reg) == null){
             value = variable.get(reg);
@@ -69,6 +69,12 @@ public class Data {
         else {
             value = register.get(reg).getRegValue();
         }
+        System.out.println(value);
+        return value;
+    }
+
+    public String regValuetoString(String reg){
+        int[] value = regValue(reg);
         String str = "";
         for (int i = 0 ; i < 8 ; i++){
             str += value[i];

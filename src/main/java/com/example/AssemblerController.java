@@ -62,7 +62,7 @@ public class AssemblerController implements Initializable {
 
     public void onDebugClick(){
         aLogic.readCode(f);
-        eaxOut.setText(eaxOut.getText() + " " + aLogic.regValue("eax"));
+        eaxOut.setText("eax =" + " " + aLogic.regValue("eax"));
 
     }
 

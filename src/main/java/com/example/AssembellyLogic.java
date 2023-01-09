@@ -8,7 +8,9 @@ import java.io.IOException;
 import model.OrderType;
 
 public class AssembellyLogic {
-    Data data = new Data();
+    // Data data = new Data();
+    Instruction ins = new Instruction();
+    Data data = Instruction.data;
     
     public void readCode(File file){
         try {
@@ -45,39 +47,47 @@ public class AssembellyLogic {
     public void syntaxReader(String syn , String destination , String source ){
         switch (syn){
             case "add":
-            // add func
+            ins.addFunc(destination, source);
             break;
             case "mov":
-            movFunc(destination, source);
+            ins.movFunc(destination, source);
             break;
         }
     }
 
-    public void movFunc(String destination , String source){
-        // String des = reg.registerType(destination);
-        int desType = data.registerSize(destination);
-        String desNum = data.registerType(destination);
-        int[] res = new int[8];
-        if (data.registerType(source) != null){
-            source = data.regValue(source);
-        }            
-        source = source.substring(0, source.length() - 1);
-        int i;
-            if (desType != 42){
-                i = 0;
-            }
-            else {
-                i = 2;
-            }  
-            int ind = 0;
-            for (; i < source.length() ; i++){
-                res[7 - i] = Integer.parseInt(String.valueOf(source.charAt(source.length() - ind - 1)));
-                ind++;
-            }
-        data.initilizeReg(res, desNum);
-    }
+    
 
     public String regValue(String reg){
-        return data.regValue(reg);
+        return data.regValuetoString(reg);
+    }
+
+    public static int[] baseConverter(String numb){
+        int[] res = new int[8];
+        String radix = numb.substring(numb.length() - 1);
+        numb = numb.substring(0 , numb.length() - 1);
+        if (radix.equals("h")){
+            for (int k = 7, i = numb.length() - 1 ; i >= 0 ; i--){
+                if (((int)numb.charAt(i)) > 57){
+                    res[k] = ((int) numb.charAt(i)) - 55 ;
+                }
+                else {
+                    res[k] = numb.charAt(i) - '0';
+                }
+                System.out.println("-" + res[k]);
+            }
+        }
+        else {
+            System.out.println("chimigi");
+            int numbInt = Integer.parseInt(numb);
+            int i = 0 , k = 7;
+            while (numbInt != 0){
+                int rem = numbInt % 16;
+                res[k] = rem;
+                numbInt /= 16;
+                i++;
+                k--;
+            }
+        }
+        return res;
     }
 }

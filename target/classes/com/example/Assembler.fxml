@@ -94,23 +94,53 @@
             <Label prefHeight="18.0" prefWidth="30.0" BorderPane.alignment="CENTER" />
          </left>
          <bottom>
-            <HBox prefHeight="144.0" prefWidth="902.0" BorderPane.alignment="CENTER">
+            <HBox prefHeight="151.0" prefWidth="902.0" BorderPane.alignment="CENTER">
                <children>
                   <VBox prefHeight="123.0" prefWidth="131.0" />
-                  <VBox prefHeight="174.0" prefWidth="678.0">
+                  <VBox prefHeight="144.0" prefWidth="671.0">
                      <children>
-                        <Label prefHeight="33.0" prefWidth="671.0" text="Label" />
-                        <Pane prefHeight="126.0" prefWidth="571.0" />
+                        <Pane prefHeight="32.0" prefWidth="661.0" style="-fx-background-color: grey;">
+                           <children>
+                              <Text fill="WHITE" layoutX="20.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registers" wrappingWidth="218.40327835083008">
+                                 <font>
+                                    <Font size="15.0" />
+                                 </font>
+                              </Text>
+                           </children>
+                        </Pane>
+                        <Pane prefHeight="126.0" prefWidth="571.0">
+                           <children>
+                              <Text fx:id="eaxOut" fill="#00fbff" layoutX="21.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#00fbff" layoutX="197.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#00fbff" layoutX="315.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#00fbff" layoutX="491.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                              </Text>
+                           </children></Pane>
                      </children>
                   </VBox>
                </children></HBox>
          </bottom>
          <center>
-            <TabPane prefHeight="200.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <TabPane prefHeight="359.0" prefWidth="771.0" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
               <tabs>
-                <Tab text="Untitled Tab 2">
+                <Tab text="Worksheet">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="771.0">
                            <children>
                               <TextArea fx:id="codeArea" prefHeight="348.0" prefWidth="771.0" />
                            </children>
