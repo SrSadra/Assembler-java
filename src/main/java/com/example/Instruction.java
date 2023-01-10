@@ -11,20 +11,17 @@ public class Instruction {
     }
 
     public void movFunc(String destination , String source){
-        // String des = reg.registerType(destination);
         int desType = data.registerSize(destination); //duplicated code
         String desNum = data.registerType(destination);
+        if (desNum == null){
+            desNum = destination;
+        }
         int[] src = new int[8];
         int[] res = new int[8];
-        if (data.registerType(source) != null){
-            System.out.println("hehe");
-            src = data.regValue(source);
-        }     
-        else {
-            System.out.println("hoho");
+        src = data.regValue(source);
+        if (src == null){
             src = AssembellyLogic.baseConverter(source);
-            // ta inja okey
-        }       
+        }   
         int i;
             if (desType != 42){
                 i = 0;
@@ -44,6 +41,9 @@ public class Instruction {
     public void addFunc(String destination , String source){
         int desType = data.registerSize(destination); //duplicated code
         String desNum = data.registerType(destination);
+        if (desNum == null){
+            desNum = destination;
+        }
         int[] src = new int[8];
         int[] res = new int[8];
         if (data.registerType(source) != null){

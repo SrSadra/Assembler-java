@@ -8,6 +8,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
+import java.nio.file.Files;
 import java.util.ResourceBundle;
 
 import javax.swing.JFileChooser;
@@ -61,9 +62,8 @@ public class AssemblerController implements Initializable {
     }
 
     public void onDebugClick(){
-        aLogic.readCode(f);
+        aLogic.readCode(codeArea.getText());
         eaxOut.setText("eax =" + " " + aLogic.regValue("eax"));
-
     }
 
 

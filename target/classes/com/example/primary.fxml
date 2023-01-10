@@ -24,7 +24,7 @@
             <Font size="25.0" />
          </font>
       </Text>
-      <HBox layoutX="584.0" layoutY="176.0" onMouseClicked="#openFile" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b;">
+      <HBox layoutX="584.0" layoutY="176.0" onMouseClicked="#openFile" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b; -fx-background-radius: 5px;">
          <children>
             <Text fill="#ffea00" strokeType="OUTSIDE" strokeWidth="0.0" text="📁" textAlignment="CENTER" wrappingWidth="62.66998291015625">
                <font>
@@ -38,7 +38,7 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="584.0" layoutY="262.0" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b;">
+      <HBox layoutX="584.0" layoutY="262.0" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b; -fx-background-radius: 5px;">
          <children>
             <Text fill="#ffea00" strokeType="OUTSIDE" strokeWidth="0.0" text="📁" textAlignment="CENTER" wrappingWidth="62.66998291015625">
                <font>
@@ -48,7 +48,7 @@
             <Label prefHeight="66.0" prefWidth="194.0" />
          </children>
       </HBox>
-      <HBox layoutX="583.0" layoutY="351.0" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b;">
+      <HBox layoutX="583.0" layoutY="351.0" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b; -fx-background-radius: 5px;">
          <children>
             <Text fill="#ffea00" strokeType="OUTSIDE" strokeWidth="0.0" text="📁" textAlignment="CENTER" wrappingWidth="62.66998291015625">
                <font>
@@ -58,6 +58,6 @@
             <Label prefHeight="66.0" prefWidth="194.0" />
          </children>
       </HBox>
-      <Hyperlink fx:id="hyperLink" layoutX="641.0" layoutY="439.0" prefHeight="24.0" prefWidth="149.0" text="More products on github" textAlignment="CENTER" />
+      <Hyperlink fx:id="hyperLink" layoutX="641.0" layoutY="439.0" onAction="#openHyperlink" prefHeight="24.0" prefWidth="149.0" text="More products on github" textAlignment="CENTER" />
    </children>
 </AnchorPane>

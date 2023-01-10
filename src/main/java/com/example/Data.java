@@ -55,19 +55,33 @@ public class Data {
 
     public String registerType(String reg){
         System.out.println(reg);
-        if (register.get(reg) == null){
+        if (register.get(reg) != null){
+            return register.get(reg).getRegName();
+        }
+        Register regis = register.get(getRealName(reg));
+        if (regis == null){
             return null;
         }
-        return register.get(reg).getRegName();
+        return regis.getRegName();
+    }
+
+    public String getRealName(String reg){
+        if ((reg.length() == 2) && ((reg.charAt(1) == 'x') || (reg.charAt(1) == 'l') || (reg.charAt(1) == 'h'))){
+            return "e" + reg.substring(0 , 1) + "x";
+        }
+        else {
+            return reg;
+        }
     }
 
     public int[] regValue(String reg){
         int[] value = new int[8];
-        if (register.get(reg) == null){
-            value = variable.get(reg);
+        if (register.get(reg) != null){
+            value = register.get(reg).getRegValue();
         }
         else {
-            value = register.get(reg).getRegValue();
+            value = variable.get(reg);
+            
         }
         System.out.println(value);
         return value;
@@ -76,8 +90,15 @@ public class Data {
     public String regValuetoString(String reg){
         int[] value = regValue(reg);
         String str = "";
+        String digit;
         for (int i = 0 ; i < 8 ; i++){
-            str += value[i];
+            if (value[i] >= 10){
+                digit = Character.toString(((char)(value[i] + 55)));
+            }
+            else {
+                digit = Integer.toString(value[i]);
+            }
+            str += digit;
         }
         str += "h";
         return str;
