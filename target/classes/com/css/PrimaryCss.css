@@ -1,0 +1,18 @@
+#hyperLink , #hyperLink:visited{
+    -fx-underline: false;
+    -fx-text-fill: rgb(0, 153, 170);
+}
+
+
+/* #hyperLink:hover{
+    fx-effect:null;
+}
+
+#hyperLink:hover {
+    fx-color: -fx-base;
+}
+
+#hyperLink {
+    /* -fx-color: -fx-base; */
+    /* background-color: rgb(255, 208, 0);
+} */ 

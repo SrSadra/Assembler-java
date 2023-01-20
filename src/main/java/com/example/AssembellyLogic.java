@@ -2,38 +2,73 @@ package com.example;
 
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
 
 import model.OrderType;
 
 public class AssembellyLogic {
     // Data data = new Data();
-    Instruction ins = new Instruction();
-    Data data = Instruction.data;
-    
-    public void readCode(String codeData){
-            // BufferedReader reader = new BufferedReader(new FileReader(file));
-            String line;
-            String[] codeLine = new String[4];
-            String[] codeTostring = codeData.split("\n");
-            for (int i = 0 ; i < codeTostring.length ; i++){
-                line = codeTostring[i];
-                System.out.println(line);
-                String regex = "\\s+";
-                line = line.replaceAll(regex, " ");
-                codeLine = line.split(" ");
-                String orderSyn = codeLine[0].toLowerCase();
-                if (orderSyn.equals("comment")){
-                    //comment func
-                }
-                else {
-                    String destination = codeLine[1].substring(0 , codeLine[1].length() - 1);
-                    System.out.println(destination + "-");
-                    String source = codeLine[2];
-                    System.out.println(source);
-                    syntaxReader(orderSyn , destination , source);
-                }
-            }
+    private Instruction ins = new Instruction();
+    private Data data = Instruction.data;
+    public HashMap<String , String> lastValue = data.lastValue;
+    private ArrayList<Integer> breakPoints = new ArrayList<>();
+    private int indBreak = 0;
+    private String[] codeTostring;
+
+    public void addBreakpoints(int breakp){
+        breakPoints.add(breakp);
     }
+    
+    
+    public void readCode(String codeData , int lineNum){
+        if (codeData != null){
+            codeTostring = codeData.split("\n");
+        }
+        if (lineNum == 0){
+            for (int i = 0 ; i < codeTostring.length ; i++){
+                codeDecoding(codeTostring[i]);
+            }
+        }
+        else {
+            codeDecoding(codeTostring[indBreak]);
+        }
+    }
+
+    public boolean updateBreakPoints(){
+        indBreak += 1;
+        if (indBreak == breakPoints.size()){
+            indBreak = 0;
+            return false;
+        }
+        return true;
+    }
+
+
+    public void codeDecoding(String codeTmp){                
+        String[] codeLine = new String[4];
+        String regex = "\\s+";
+        codeTmp = codeTmp.replaceAll(regex, " ");
+        codeLine = codeTmp.split(" ");
+        String orderSyn = codeLine[0].toLowerCase();
+        if (orderSyn.equals("comment")){
+            //comment func
+        }
+        else {
+            String destination = codeLine[1].substring(0 , codeLine[1].length() - 1);
+            System.out.println(destination + "-");
+            String source = codeLine[2];
+            System.out.println(source);
+            syntaxReader(orderSyn , destination , source);
+        }
+    }
+
+    // public void debugCode(String codeData){
+    //     for (int i = 0 ; i < breakPoints.size() ; i++){
+    //         int lineNum = breakPoints.get(i);
+    //         readCode(codeData, lineNum);
+    //     }
+    // }
 
     public void syntaxReader(String syn , String destination , String source ){
         switch (syn){
@@ -43,6 +78,15 @@ public class AssembellyLogic {
             case "mov":
             ins.movFunc(destination, source);
             break;
+            case "sub":
+            ins.subFunc(destination, source);
+            break;
+            case "and":
+            ins.andFunc(destination, source);
+            break;
+            case "or":
+            ins.orFunc(destination, source);
+            break;
         }
     }
 
@@ -50,6 +94,10 @@ public class AssembellyLogic {
 
     public String regValue(String reg){
         return data.regValuetoString(reg);
+    }
+
+    public int flagValue(String flag){
+        return data.flagValue(flag);
     }
 
     public static int[] baseConverter(String numb){
@@ -64,7 +112,7 @@ public class AssembellyLogic {
                 else {
                     res[k] = numb.charAt(i) - '0';
                 }
-                System.out.println("-" + res[k]);
+                
             }
         }
         else {
@@ -81,12 +129,11 @@ public class AssembellyLogic {
                 break;
             }
             int numbInt = Integer.parseInt(numb, radixToint);
-            int i = 0 , k = 7;
+            int k = 7; 
             while (numbInt != 0){
                 int rem = numbInt % 16;
                 res[k] = rem;
                 numbInt /= 16;
-                i++;
                 k--;
             }
         }

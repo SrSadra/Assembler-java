@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuButton?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.BorderPane?>
@@ -27,11 +31,20 @@
                <children>
                   <VBox prefHeight="53.0" prefWidth="88.0">
                      <children>
-                        <ImageView fitHeight="52.0" fitWidth="88.0" pickOnBounds="true" preserveRatio="true" />
-                        <Text fill="#0009ff" strokeType="OUTSIDE" strokeWidth="0.0" text="AS2023" textAlignment="CENTER" wrappingWidth="87.20341300964355">
+                        <ImageView fitHeight="38.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../pics/icon.png" />
+                           </image>
+                           <VBox.margin>
+                              <Insets left="20.0" top="5.0" />
+                           </VBox.margin></ImageView>
+                        <Text fill="#e5295f" strokeType="OUTSIDE" strokeWidth="0.0" text="AS2023" textAlignment="CENTER" wrappingWidth="87.20341300964355">
                            <font>
-                              <Font name="System Bold" size="18.0" />
+                              <Font name="Agency FB Bold" size="18.0" />
                            </font>
+                           <VBox.margin>
+                              <Insets top="10.0" />
+                           </VBox.margin>
                         </Text>
                      </children>
                   </VBox>
@@ -61,9 +74,9 @@
                               <HBox prefHeight="43.0" prefWidth="57.0" />
                               <HBox prefHeight="43.0" prefWidth="144.0">
                                  <children>
-                                    <Label prefHeight="25.0" prefWidth="25.0" style="-fx-label-padding: 5px;" text="▶" textAlignment="CENTER" textFill="#2bff00">
+                                    <Label onMouseClicked="#onRunClick" prefHeight="0.0" prefWidth="25.0" style="-fx-label-padding: 5px;" text="▶" textAlignment="CENTER" textFill="#2bff00">
                                        <HBox.margin>
-                                          <Insets />
+                                          <Insets top="-3.0" />
                                        </HBox.margin>
                                        <font>
                                           <Font name="System Bold" size="27.0" />
@@ -71,7 +84,7 @@
                                     </Label>
                                     <MenuButton mnemonicParsing="false" prefHeight="12.0" prefWidth="122.0" style="-fx-background-color: grey;" text="MenuButton" textFill="#0dff00">
                                       <items>
-                                        <MenuItem mnemonicParsing="false" text="Run" />
+                                        <MenuItem mnemonicParsing="false" onAction="#onRunClick" text="Run" />
                                         <MenuItem mnemonicParsing="false" onAction="#onDebugClick" text="Debug" />
                                       </items>
                                        <HBox.margin>
@@ -79,6 +92,34 @@
                                        </HBox.margin>
                                     </MenuButton>
                                  </children>
+                              </HBox>
+                              <HBox prefHeight="43.0" prefWidth="131.0">
+                                 <children>
+                                    <ImageView fx:id="contBP" fitHeight="29.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                       <HBox.margin>
+                                          <Insets top="7.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                    <Text fx:id="StopBP" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="24.799987316131592">
+                                       <HBox.margin>
+                                          <Insets top="7.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                    </Text>
+                                    <Text fx:id="retBP" fill="#bfbfbf" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="28.799986362457275">
+                                       <HBox.margin>
+                                          <Insets top="7.0" />
+                                       </HBox.margin>
+                                       <font>
+                                          <Font size="19.0" />
+                                       </font>
+                                    </Text>
+                                 </children>
+                                 <HBox.margin>
+                                    <Insets left="10.0" />
+                                 </HBox.margin>
                               </HBox>
                            </children>
                         </HBox>
@@ -96,7 +137,34 @@
          <bottom>
             <HBox prefHeight="151.0" prefWidth="902.0" BorderPane.alignment="CENTER">
                <children>
-                  <VBox prefHeight="123.0" prefWidth="131.0" />
+                  <VBox prefHeight="123.0" prefWidth="131.0">
+                     <children>
+                        <HBox prefHeight="38.0" prefWidth="131.0">
+                           <children>
+                              <TextField fx:id="bpInput" prefHeight="26.0" prefWidth="70.0" promptText="BreakPoint Num" style="-fx-background-color: grey;">
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="13.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="8.0" />
+                                 </font>
+                              </TextField>
+                              <Button fx:id="bpButt" mnemonicParsing="false" onAction="#breakPoint" prefHeight="26.0" prefWidth="26.0" style="-fx-background-color: #d10869;">
+                                 <HBox.margin>
+                                    <Insets left="10.0" top="13.0" />
+                                 </HBox.margin>
+                              </Button>
+                           </children>
+                        </HBox>
+                        <ScrollPane prefHeight="88.0" prefWidth="118.0" style="-fx-background-color: grey; -fx-background-radius: 10px;">
+                           <content>
+                              <VBox fx:id="bpVbox" prefHeight="188.0" prefWidth="100.0" style="-fx-background-color: grey;" />
+                           </content>
+                           <VBox.margin>
+                              <Insets left="6.0" right="6.0" top="10.0" />
+                           </VBox.margin>
+                        </ScrollPane>
+                     </children></VBox>
                   <VBox prefHeight="144.0" prefWidth="671.0">
                      <children>
                         <Pane prefHeight="32.0" prefWidth="661.0" style="-fx-background-color: grey;">
@@ -110,24 +178,49 @@
                         </Pane>
                         <Pane prefHeight="126.0" prefWidth="571.0">
                            <children>
-                              <Text fx:id="eaxOut" fill="#00fbff" layoutX="21.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
+                              <Text fx:id="eaxOut" fill="WHITE" layoutX="21.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Text>
-                              <Text fill="#00fbff" layoutX="197.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
+                              <Text fx:id="ebxOut" fill="WHITE" layoutX="197.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Text>
-                              <Text fill="#00fbff" layoutX="315.0" layoutY="35.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
+                              <Text fx:id="ecxOut" fill="WHITE" layoutX="340.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="13.0" />
                                  </font>
                               </Text>
-                              <Text fill="#00fbff" layoutX="491.0" layoutY="34.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
+                              <Text fx:id="edxOut" fill="WHITE" layoutX="491.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
                                  <font>
-                                    <Font size="18.0" />
+                                    <Font size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="cy" fill="WHITE" layoutX="20.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="81.87007522583008">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="sf" fill="WHITE" layoutX="126.0" layoutY="82.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="83.47006607055664">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="zf" fill="WHITE" layoutX="238.0" layoutY="81.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="86.67007827758789">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="ov" fill="WHITE" layoutX="348.0" layoutY="86.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="80.27011489868164">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="pf" fill="WHITE" layoutX="462.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="80.27011489868164">
+                                 <font>
+                                    <Font size="13.0" />
                                  </font>
                               </Text>
                            </children></Pane>
@@ -142,7 +235,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="771.0">
                            <children>
-                              <TextArea fx:id="codeArea" prefHeight="348.0" prefWidth="771.0" />
+                              <TextArea fx:id="codeArea" onInputMethodTextChanged="#onCodeTextCng" onKeyReleased="#onCodeTextCng" prefHeight="348.0" prefWidth="771.0" />
                            </children>
                         </AnchorPane>
                   </content>
@@ -151,7 +244,7 @@
             </TabPane>
          </center>
       </BorderPane>
-      <Line endX="800.800048828125" endY="78.13331604003906" startX="1.6276040696538985E-5" startY="78.13331604003906" stroke="#2845e7" strokeWidth="5.0" />
-      <Line endX="869.6000366210938" endY="78.13336181640625" layoutX="32.0" layoutY="375.0" startX="1.6276040696538985E-5" startY="78.13331604003906" stroke="#2845e7" strokeWidth="5.0" />
+      <Line endX="800.800048828125" endY="78.13331604003906" startX="1.6276040696538985E-5" startY="78.13331604003906" stroke="#e5295f" strokeWidth="5.0" />
+      <Line endX="869.6000366210938" endY="78.13336181640625" layoutX="32.0" layoutY="375.0" startX="1.6276040696538985E-5" startY="78.13331604003906" stroke="#e5295f" strokeWidth="5.0" />
    </children>
 </AnchorPane>
