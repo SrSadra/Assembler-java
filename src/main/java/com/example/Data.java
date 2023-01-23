@@ -17,33 +17,54 @@ public class Data {
         register = new HashMap<>();
         flag = new HashMap<>();
         lastValue = new HashMap<>();
-        lastValue.put("eax", "&");
-        lastValue.put("ebx", "&");
-        lastValue.put("ecx", "&");
-        lastValue.put("edx", "&");
+        lastValue.put("eax", "00000000h");
+        lastValue.put("ebx", "00000000h");
+        lastValue.put("ecx", "00000000h");
+        lastValue.put("edx", "00000000h");
+        lastValue.put("edi", "00000000h");
         lastValue.put("CY", "&");
         lastValue.put("PF", "&");
         lastValue.put("ZF", "&");
         lastValue.put("SF", "&");
         lastValue.put("OV", "&");
-        setZeroReg();
+        setZeroRegFlg();
     }
 
-    private void setZeroReg(){
-        String[] alph = {"a" , "b" , "c" , "d"};
-        String[] flg = {"carry" , "zero" , "sign" , "parity" , "overflow"};
-        for (int i = 0 ; i < 4 ; i++){
-            String str = "e" + alph[i] + "x";
+    public void setZeroRegFlg(){
+        String[] alph = {"a" , "b" , "c" , "d" };
+        String[] flg = {"CY" , "PF" , "ZF" , "SF" , "OV"};
+        for (int i = 0 ; i < 5 ; i++){
             int[] value = {0,0,0,0,0,0,0,0};
-            Register reg = new Register(str);
+            String str;
+            if (i == 4){
+                str = "edi";
+            }
+            else {
+                str = "e" + alph[i] + "x";
+            }
+            Register reg;
+            if (register.get(str) == null){
+                reg = new Register(str);
+            }
+            else {
+                reg = register.get(str);
+            }
             reg.setRegValue(value);
             register.put(str, reg );
         }
         for (int i = 0 ; i < 5; i++){
-            Flag flags = new Flag(flg[i]);
+            Flag flags;
+            if (flag.get(flg[i]) == null){
+                flags = new Flag(flg[i]);
+            }
+            else {
+                flags = flag.get(flg[i]);
+                flags.setSet(0);
+            }
             flag.put(flg[i], flags);
         }
     }
+
 
     // public String registerType(String reg){
 
@@ -51,41 +72,33 @@ public class Data {
 
     public void initilizeReg(int[] res, String regNum){
         Register value = register.get(regNum);
+        System.out.println("register name " + regNum);
         value.setRegValue(res);
         register.put(regNum, value);
     }
 
-    public void updateFlags(int[] reg , String carry , String overFlag){
-        int zeroCnt = 0;
-        int parityCnt = 0;
-        for (int i = 0 ; i < reg.length ; i++){
-            if (reg[i] == 0){
-                zeroCnt += 1;
-            }
-            if (reg[i] == 1){
-                parityCnt += 1;
-            }
+    public void updateFlags(int[] reg , int desType , String carry , String overFlag , String parity , String zero){
+        if (zero.equals("zero")){
+            setFlag("ZF" , 1);
         }
-        if (zeroCnt == 8){
-            setFlag("zero");
+        if (parity.equals("parity")){
+            setFlag("PF", 1);
         }
-        if (parityCnt % 2 == 1){
-            setFlag("parity");
-        }
-        if (reg[0] >= 8){
-            setFlag("sign");
+        int desLast = reg[7 - (desType / 10) - (desType % 10)];
+        if (desLast >= 8){
+            setFlag("SF" , 1);
         }
         if (carry.equals("carry")){
-            setFlag(carry);
+            setFlag("CY" , 1);
         }
         if (overFlag.equals("overflow")){
-            setFlag(overFlag);
+            setFlag("OV" , 1);
         }
     }
 
-    public void setFlag(String name){
+    public void setFlag(String name , int set){
         Flag myFlag = flag.get(name);
-        myFlag.setSet(1);
+        myFlag.setSet(set);
         flag.put(name, myFlag);
     }
 
@@ -94,7 +107,7 @@ public class Data {
             return -1;
         }
         String lastChar = reg.substring(reg.length() - 1);
-        if (lastChar.equals("x")){
+        if ((lastChar.equals("i")) || (lastChar.equals("x") && !(reg.charAt(0) == 'e'))){
             return 30;
         }
         else if (lastChar.equals("l")){
@@ -121,6 +134,9 @@ public class Data {
     }
 
     public String getRealName(String reg){
+        if ((reg.length() == 2) && (reg.charAt(1) == 'i')){
+            return "e" + reg.substring(0, 1) + "i";
+        }
         if ((reg.length() == 2) && ((reg.charAt(1) == 'x') || (reg.charAt(1) == 'l') || (reg.charAt(1) == 'h'))){
             return "e" + reg.substring(0 , 1) + "x";
         }
@@ -168,9 +184,15 @@ public class Data {
     }
 
     public static int findLastDigit(int desType , int[] des , int srcType , int[] src){
+        System.out.println("srctype is " + srcType + "destype is" + desType);
         int srcLast = 0;
         int desLast = 0;
-        srcLast = src[7 - (srcType / 10) - (srcType % 10)];
+        if (srcType == -1){
+            srcLast = src[0];
+        }
+        else {
+            srcLast = src[7 - (srcType / 10) - (srcType % 10)];
+        }
         desLast = des[7 - (desType / 10) - (desType % 10)];
         if (srcLast >= 8 && (desLast >= 8)){
             return -1;

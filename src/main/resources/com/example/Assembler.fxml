@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
@@ -71,8 +70,8 @@
                         </MenuBar>
                         <HBox prefHeight="43.0" prefWidth="756.0">
                            <children>
-                              <HBox prefHeight="43.0" prefWidth="57.0" />
-                              <HBox prefHeight="43.0" prefWidth="144.0">
+                              <HBox prefHeight="43.0" prefWidth="82.0" />
+                              <HBox prefHeight="43.0" prefWidth="184.0">
                                  <children>
                                     <Label onMouseClicked="#onRunClick" prefHeight="0.0" prefWidth="25.0" style="-fx-label-padding: 5px;" text="▶" textAlignment="CENTER" textFill="#2bff00">
                                        <HBox.margin>
@@ -82,30 +81,33 @@
                                           <Font name="System Bold" size="27.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton mnemonicParsing="false" prefHeight="12.0" prefWidth="122.0" style="-fx-background-color: grey;" text="MenuButton" textFill="#0dff00">
+                                    <MenuButton mnemonicParsing="false" prefHeight="22.0" prefWidth="152.0" style="-fx-background-color: grey;" text="Local Windows Debugger" textFill="WHITE">
                                       <items>
                                         <MenuItem mnemonicParsing="false" onAction="#onRunClick" text="Run" />
                                         <MenuItem mnemonicParsing="false" onAction="#onDebugClick" text="Debug" />
                                       </items>
                                        <HBox.margin>
-                                          <Insets top="8.0" />
+                                          <Insets top="9.0" />
                                        </HBox.margin>
+                                       <font>
+                                          <Font name="Arial Rounded MT Bold" size="10.0" />
+                                       </font>
                                     </MenuButton>
                                  </children>
                               </HBox>
                               <HBox prefHeight="43.0" prefWidth="131.0">
                                  <children>
-                                    <ImageView fx:id="contBP" fitHeight="29.0" fitWidth="25.0" pickOnBounds="true" preserveRatio="true">
+                                    <ImageView fx:id="contBP" fitHeight="29.0" fitWidth="25.0" onMouseClicked="#nextLineCode" pickOnBounds="true" preserveRatio="true">
                                        <HBox.margin>
                                           <Insets top="7.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <Text fx:id="StopBP" fill="RED" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="24.799987316131592">
+                                    <Text fx:id="StopBP" fill="#ff5151" onMouseClicked="#onStopClick" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="24.799987316131592">
                                        <HBox.margin>
                                           <Insets top="7.0" />
                                        </HBox.margin>
                                        <font>
-                                          <Font size="18.0" />
+                                          <Font name="System Bold" size="20.0" />
                                        </font>
                                     </Text>
                                     <Text fx:id="retBP" fill="#bfbfbf" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="28.799986362457275">
@@ -139,24 +141,58 @@
                <children>
                   <VBox prefHeight="123.0" prefWidth="131.0">
                      <children>
-                        <HBox prefHeight="38.0" prefWidth="131.0">
+                        <HBox prefHeight="32.0" prefWidth="131.0">
+                           <children>
+                              <Text fill="#d9d9d9" strokeType="OUTSIDE" strokeWidth="0.0" text="Breakpoints" wrappingWidth="55.14825439453125">
+                                 <HBox.margin>
+                                    <Insets left="5.0" top="10.0" />
+                                 </HBox.margin>
+                                 <font>
+                                    <Font size="10.0" />
+                                 </font>
+                              </Text>
+                              <Text fill="#919090" strokeType="OUTSIDE" strokeWidth="0.0" text="▒▒▒▒▒▒▒▒▒▒" wrappingWidth="69.54816436767578">
+                                 <font>
+                                    <Font size="9.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="10.0" />
+                                 </HBox.margin>
+                              </Text>
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="32.0" prefWidth="131.0">
                            <children>
                               <TextField fx:id="bpInput" prefHeight="26.0" prefWidth="70.0" promptText="BreakPoint Num" style="-fx-background-color: grey;">
                                  <HBox.margin>
-                                    <Insets left="10.0" top="13.0" />
+                                    <Insets left="6.0" top="3.0" />
                                  </HBox.margin>
                                  <font>
                                     <Font size="8.0" />
                                  </font>
                               </TextField>
-                              <Button fx:id="bpButt" mnemonicParsing="false" onAction="#breakPoint" prefHeight="26.0" prefWidth="26.0" style="-fx-background-color: #d10869;">
+                              <Text fx:id="bpDelButt" fill="RED" onMousePressed="#delBreakPoint" strokeType="OUTSIDE" strokeWidth="0.0" text="❌" wrappingWidth="18.93670654296875">
                                  <HBox.margin>
-                                    <Insets left="10.0" top="13.0" />
+                                    <Insets left="6.0" top="3.0" />
                                  </HBox.margin>
-                              </Button>
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="bpAddButt" fill="#3edc65" onMousePressed="#addBreakPoint" strokeType="OUTSIDE" strokeWidth="0.0" text="🔴" wrappingWidth="17.33673095703125">
+                                 <font>
+                                    <Font size="17.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets left="6.0" top="3.0" />
+                                 </HBox.margin>
+                              </Text>
                            </children>
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
                         </HBox>
-                        <ScrollPane prefHeight="88.0" prefWidth="118.0" style="-fx-background-color: grey; -fx-background-radius: 10px;">
+                        <ScrollPane prefHeight="66.0" prefWidth="118.0" style="-fx-background-color: grey; -fx-background-radius: 10px;">
                            <content>
                               <VBox fx:id="bpVbox" prefHeight="188.0" prefWidth="100.0" style="-fx-background-color: grey;" />
                            </content>
@@ -167,33 +203,44 @@
                      </children></VBox>
                   <VBox prefHeight="144.0" prefWidth="671.0">
                      <children>
-                        <Pane prefHeight="32.0" prefWidth="661.0" style="-fx-background-color: grey;">
+                        <HBox prefHeight="42.0" prefWidth="671.0">
                            <children>
-                              <Text fill="WHITE" layoutX="20.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Registers" wrappingWidth="218.40327835083008">
+                              <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Registers" wrappingWidth="72.00329971313477">
                                  <font>
-                                    <Font size="15.0" />
+                                    <Font size="16.0" />
                                  </font>
+                                 <HBox.margin>
+                                    <Insets top="5.0" />
+                                 </HBox.margin>
+                              </Text>
+                              <Text fill="#8e8e8e" strokeType="OUTSIDE" strokeWidth="0.0" text="▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒▒" wrappingWidth="595.2032508850098">
+                                 <font>
+                                    <Font size="11.0" />
+                                 </font>
+                                 <HBox.margin>
+                                    <Insets top="9.0" />
+                                 </HBox.margin>
                               </Text>
                            </children>
-                        </Pane>
+                        </HBox>
                         <Pane prefHeight="126.0" prefWidth="571.0">
                            <children>
-                              <Text fx:id="eaxOut" fill="WHITE" layoutX="21.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
+                              <Text fx:id="eaxOut" fill="WHITE" layoutX="21.0" layoutY="31.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="122.13667678833008">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="ebxOut" fill="WHITE" layoutX="197.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
+                              <Text fx:id="ebxOut" fill="WHITE" layoutX="138.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="ecxOut" fill="WHITE" layoutX="340.0" layoutY="28.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
+                              <Text fx:id="ecxOut" fill="WHITE" layoutX="287.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="130.93672561645508">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
                               </Text>
-                              <Text fx:id="edxOut" fill="WHITE" layoutX="491.0" layoutY="27.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="133.07004165649414">
+                              <Text fx:id="edxOut" fill="WHITE" layoutX="432.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="112.27005386352539">
                                  <font>
                                     <Font size="13.0" />
                                  </font>
@@ -219,6 +266,11 @@
                                  </font>
                               </Text>
                               <Text fx:id="pf" fill="WHITE" layoutX="462.0" layoutY="87.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="80.27011489868164">
+                                 <font>
+                                    <Font size="13.0" />
+                                 </font>
+                              </Text>
+                              <Text fx:id="ediOut" fill="WHITE" layoutX="567.0" layoutY="29.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="99.47006607055664">
                                  <font>
                                     <Font size="13.0" />
                                  </font>

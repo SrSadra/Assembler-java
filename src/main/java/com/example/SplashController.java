@@ -1,8 +1,11 @@
 package com.example;
 
+import java.io.File;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
+
+import javax.print.attribute.standard.Media;
 
 import javafx.application.Platform;
 import javafx.fxml.FXMLLoader;
@@ -11,6 +14,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.media.MediaPlayer;  
+import javafx.scene.media.MediaView;
 
 public class SplashController implements Initializable {
 
@@ -26,27 +31,17 @@ public class SplashController implements Initializable {
         @Override
         public void run(){
             try {
-                Thread.sleep(3000);
+                Thread.sleep(3000);                        
                 Platform.runLater(new Runnable() {
                 @Override
                 public void run() {
-                    Parent root = null;
-                    // try{
-                    //     root = FXMLLoader.load(getClass().getResource("primary.fxml")); 
-                    // }
-                    // catch (IOException e){
-                    //     e.printStackTrace();
-                    // }
-                    // Scene scene = new Scene(root);
-                    // Stage stage = new Stage();
-                    // stage.setScene(scene);
-                    // stage.show();
                     try {
                         App.setRoot("primary");
+
+
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
-                    // stackRoot.getScene().getWindow().hide();
                     
                 }
             });

@@ -9,6 +9,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.URL;
 import java.nio.file.Files;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
 
@@ -60,6 +61,8 @@ public class AssemblerController extends Stage implements Initializable {
     @FXML
     private Text edxOut;
     @FXML
+    private Text ediOut;
+    @FXML
     private Text cy;
     @FXML
     private Text ov;
@@ -69,8 +72,10 @@ public class AssemblerController extends Stage implements Initializable {
     private Text zf;
     @FXML
     private Text pf;
-    @FXML
-    private Button bpButt;
+    // @FXML
+    // private Button bpAddButt;
+    // @FXML
+    // private Button bpDelButt;
     @FXML
     private TextField bpInput;
     @FXML
@@ -87,7 +92,7 @@ public class AssemblerController extends Stage implements Initializable {
 
     public int lineNum = 1;
     public String baseCode = "";
-
+    private HashMap<String , Label> breakPoints = new HashMap<>();
 
     // private static JTextArea textArea;
     // private static JTextArea lines;
@@ -187,18 +192,30 @@ public class AssemblerController extends Stage implements Initializable {
         // }
     }
 
-    public void breakPoint(){
+    public void addBreakPoint(){
         int bpNum = Integer.parseInt(bpInput.getText());
         Label bpStatus = new Label();
+        String str = "● BP at " + bpNum;
         bpStatus.setText("● BP at " + bpNum);
         bpVbox.getChildren().add(bpStatus);
-        aLogic.addBreakpoints(bpNum);
+        aLogic.addBreakpoints(bpNum - 1);
+        breakPoints.put(str, bpStatus);
+    }
+
+    public void delBreakPoint(){
+        int bpNum = Integer.parseInt(bpInput.getText());
+        Label stopBP = breakPoints.get("● BP at " + bpNum);
+        bpVbox.getChildren().remove(stopBP);
+        breakPoints.remove("● BP at " + bpNum);
+        aLogic.delBreakpoints(bpNum);
     }
 
     public void onRunClick(){
+        setVisibleRegFlg(true);
         aLogic.readCode(codeArea.getText() , 0);
         setRegisters();
         setFlags();
+        aLogic.resetFlag();
     }
 
     public void onDebugClick(){
@@ -206,16 +223,42 @@ public class AssemblerController extends Stage implements Initializable {
         aLogic.readCode(codeArea.getText(), 1);
         setRegisters();
         setFlags();
+        setVisibleRegFlg(true);
+        aLogic.resetFlag();
+    }
+
+    public void onStopClick(){
+        aLogic.setIndBreak(0);
+        setVisibleRegFlg(false);
+        aLogic.setZeroRegFlg();
+        invisibleDebugButt();
+    }
+
+    public void setVisibleRegFlg(boolean status){
+        eaxOut.setVisible(status);
+        ebxOut.setVisible(status);
+        ecxOut.setVisible(status);
+        edxOut.setVisible(status);
+        ediOut.setVisible(status);
+        cy.setVisible(status);
+        ov.setVisible(status);
+        sf.setVisible(status);
+        zf.setVisible(status);
+        pf.setVisible(status);
     }
 
     public void nextLineCode(){
         if (!aLogic.updateBreakPoints()){
             invisibleDebugButt();
+            aLogic.setZeroRegFlg();
+            setVisibleRegFlg(false);
             return;
         }
         aLogic.readCode(null, 1 );
         setRegisters();
         setFlags();
+        setVisibleRegFlg(true);
+        aLogic.resetFlag();
     }
 
     public void showDebugButt(){
@@ -232,21 +275,21 @@ public class AssemblerController extends Stage implements Initializable {
 
     public void setFlags(){
         HashMap<String , String> oldValue = aLogic.lastValue;
-        int carryUp = aLogic.flagValue("carry");
-        int signUp = aLogic.flagValue("sign");
-        int zeroUp = aLogic.flagValue("zero");
-        int parityUp = aLogic.flagValue("parity");
-        int overflowUp = aLogic.flagValue("overflow");
+        int carryUp = aLogic.flagValue("CY");
+        int signUp = aLogic.flagValue("SF");
+        int zeroUp = aLogic.flagValue("ZF");
+        int parityUp = aLogic.flagValue("PF");
+        int overflowUp = aLogic.flagValue("OV");
         changeUpdateColor(Integer.toString(carryUp), cy, oldValue, "CY");
         changeUpdateColor(Integer.toString(signUp), sf, oldValue, "SF");
         changeUpdateColor(Integer.toString(zeroUp), zf, oldValue, "ZF");
         changeUpdateColor(Integer.toString(parityUp), pf, oldValue, "PF");
         changeUpdateColor(Integer.toString(overflowUp), ov, oldValue, "OV");
-        oldValue.put("carry", Integer.toString(carryUp));
-        oldValue.put("sign", Integer.toString(signUp));
-        oldValue.put("zero", Integer.toString(zeroUp));
-        oldValue.put("parity", Integer.toString(parityUp));
-        oldValue.put("overflow", Integer.toString(overflowUp));
+        oldValue.put("CY", Integer.toString(carryUp));
+        oldValue.put("SF", Integer.toString(signUp));
+        oldValue.put("ZF", Integer.toString(zeroUp));
+        oldValue.put("PF", Integer.toString(parityUp));
+        oldValue.put("OV", Integer.toString(overflowUp));
     }
 
     public void setRegisters(){
@@ -255,20 +298,24 @@ public class AssemblerController extends Stage implements Initializable {
         String ebxUpdate = aLogic.regValue("ebx");
         String ecxUpdate = aLogic.regValue("ecx");
         String edxUpdate = aLogic.regValue("edx");
+        String ediUpdate = aLogic.regValue("edi");
         changeUpdateColor(eaxUpdate, eaxOut, oldValue, "eax");
         changeUpdateColor(ebxUpdate, ebxOut, oldValue, "ebx");
         changeUpdateColor(ecxUpdate, ecxOut, oldValue, "ecx");
         changeUpdateColor(edxUpdate, edxOut, oldValue, "edx");
+        changeUpdateColor(ediUpdate, ediOut, oldValue, "edi");
         oldValue.put("eax", eaxUpdate);
         oldValue.put("ebx", ebxUpdate);
         oldValue.put("ecx", ecxUpdate);
         oldValue.put("edx", edxUpdate);
+        oldValue.put("edi", ediUpdate);
     }
 
     public void changeUpdateColor(String newValue , Text text , HashMap<String , String> Oldvalue , String name){
         System.out.println(name);
         text.setText(name + " = " + newValue);
-        if (!Oldvalue.get(name).equals(newValue) && !Oldvalue.get(name).equals("&")){
+        System.out.println(newValue + "new value");
+        if (!Oldvalue.get(name).equals(newValue) && !Oldvalue.get(name).equals("&") && !Oldvalue.get(name).equals("00000000h")){
             text.setFill(Color.RED);
         }
     }
@@ -276,7 +323,7 @@ public class AssemblerController extends Stage implements Initializable {
     public void paths(){
         contBPImage = new Image("file:D:\\assembler\\demo\\src\\main\\resources\\com\\pics\\nextarrow.png");
         contBP.setImage(contBPImage);
-        StopBP.setText("■");
+        StopBP.setText("◻");
         retBP.setText("⟲");
     }
 

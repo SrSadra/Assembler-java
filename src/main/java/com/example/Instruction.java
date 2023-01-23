@@ -44,6 +44,7 @@ public class Instruction {
         System.out.println("src" + srcType + "des" + desType);
         int i = desType % 10 , k = srcType != -1 ? srcType % 10 : 0;
         System.out.println(desType);
+        int[] edx = data.regValue("edx");
             // if (desType == 42){
             //     i = 2;
             // }
@@ -77,6 +78,7 @@ public class Instruction {
         int indDes = desType % 10;
         int indSrc = srcType != -1 ? srcType % 10 : 0;
         int lastDigit = Data.findLastDigit(desType, des, srcType, src);
+        int parityCnt = 0 , zeroCnt = 0;
         for (int i = 7 ; i >= 0 ; i--){
             int value = (des[i - indDes]) + (src[i - indSrc]) + carry;
             carry = 0;
@@ -89,6 +91,12 @@ public class Instruction {
             else{
                 resTmp = value;
             }
+            if (resTmp > 0){
+                parityCnt += 1;
+            }
+            else {
+                zeroCnt += 1;
+            }
             des[i - indDes] = resTmp;
             if ((i == 6) && ((desType / 10) == 1)){
                 break;
@@ -99,6 +107,14 @@ public class Instruction {
         }
 
         //flags analysing...
+        String zero = "";
+        if (zeroCnt - 1 == desType / 10){
+            zero = "zero";
+        }
+        String parity = "";
+        if (parityCnt % 2 == 0){
+            parity = "parity";
+        }
         String overFlag = "";
         if ((lastDigit > 0 && (des[7 - (desType / 10) - (desType % 10)] >= 8)) || (lastDigit < 0 && (des[7 - (desType / 10) - (desType % 10)] < 8))){
             overFlag = "overflow";
@@ -107,7 +123,7 @@ public class Instruction {
         if (carry == 1){
             carryFlg = "carry";
         }
-        data.updateFlags(des , carryFlg , overFlag);
+        data.updateFlags(des , desType , carryFlg , overFlag , parity , zero);
         //
         data.initilizeReg(des, desNum);
     }
@@ -188,6 +204,7 @@ public class Instruction {
         }
         data.initilizeReg(des, desNum);
     }
+
 
     // public ArrayList<Object> initializing(string ){
 

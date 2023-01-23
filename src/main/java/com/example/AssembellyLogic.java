@@ -10,14 +10,26 @@ import model.OrderType;
 public class AssembellyLogic {
     // Data data = new Data();
     private Instruction ins = new Instruction();
+    private Breakpoint bp = new Breakpoint();
     private Data data = Instruction.data;
     public HashMap<String , String> lastValue = data.lastValue;
-    private ArrayList<Integer> breakPoints = new ArrayList<>();
-    private int indBreak = 0;
+    private HashMap<String, Integer> labelJmp = new HashMap<>();
+    private HashMap<String , Integer> labelBp = new HashMap<>();
+    private int indCurr = -2; // breakpoints traverse index
     private String[] codeTostring;
+    private String[] orders = {"mov" , "add" , "sub" , "and" , "or" , "jmp"};
+    
 
     public void addBreakpoints(int breakp){
-        breakPoints.add(breakp);
+        bp.addBreakpoints(breakp); //breakp with index style
+    }
+
+    public void delBreakpoints(int breakp){
+        bp.delBreakpoints(breakp);
+    }
+
+    public void setZeroRegFlg(){
+        data.setZeroRegFlg();
     }
     
     
@@ -25,42 +37,93 @@ public class AssembellyLogic {
         if (codeData != null){
             codeTostring = codeData.split("\n");
         }
-        if (lineNum == 0){
-            for (int i = 0 ; i < codeTostring.length ; i++){
-                codeDecoding(codeTostring[i]);
+        // if (lineNum == 0){
+            int i = 0;
+            if (indCurr != -2){
+                i = indCurr;
             }
-        }
-        else {
-            codeDecoding(codeTostring[indBreak]);
-        }
+            for (; i < codeTostring.length ; i++){
+                int iPast = i;
+                i = codeDecoding(codeTostring[i] , i);
+                if (lineNum != 0 && bp.getBreakPoints() == iPast){
+                    // if (i != iPast){ //jmp occured
+                    // }
+                    indCurr = i + 1;
+                    return;
+                }
+                if (i != codeTostring.length - 1){
+                    resetFlag();
+                }
+            }
+        // }
+        // else {
+        //     codeDecoding(codeTostring[indBreak] , );
+        // }
+    }
+
+    public void setIndBreak(int num){
+        bp.setIndBreak(num);
     }
 
     public boolean updateBreakPoints(){
-        indBreak += 1;
-        if (indBreak == breakPoints.size()){
-            indBreak = 0;
-            return false;
-        }
-        return true;
+        return bp.updateBreakPoints();
     }
 
 
-    public void codeDecoding(String codeTmp){                
+
+    public int codeDecoding(String codeTmp , int lineNum){                
         String[] codeLine = new String[4];
         String regex = "\\s+";
         codeTmp = codeTmp.replaceAll(regex, " ");
         codeLine = codeTmp.split(" ");
-        String orderSyn = codeLine[0].toLowerCase();
+        String firstIn = codeLine[0].toLowerCase();
+        String secondIn = codeLine[1].toLowerCase();
+        String orderSyn = "";
+        String labelSyn;
+        String source = "";
+        String destination = "";
+        int flg = 0 , sourceInd = 0;
+        for (int i = 0 ; i < orders.length ; i++){
+            if (orders[i].equals(firstIn)){ //if we dont have label
+                flg = 1; 
+                orderSyn = orders[i];
+                destination = secondIn;
+                sourceInd = 2;
+                break;
+            }
+        }
+        if (flg == 0){ //if we have label
+            labelSyn = firstIn;
+            orderSyn = secondIn;
+            destination = codeLine[2].toLowerCase();
+            sourceInd = 3;
+            String labelStr = labelSyn.substring(0 , labelSyn.length() - 1);
+            labelJmp.put(labelStr , lineNum);
+            labelBp.put(labelStr, bp.lastBp(lineNum)); //last breakpoint before label
+        }
         if (orderSyn.equals("comment")){
             //comment func
         }
+        else if (orderSyn.equals("jmp")){
+            bp.setIndBreak(labelBp.get(destination));
+            return labelJmp.get(destination) - 1;
+        }
         else {
-            String destination = codeLine[1].substring(0 , codeLine[1].length() - 1);
+            source = codeLine[sourceInd];
+            destination = destination.substring(0 , destination.length() - 1);
             System.out.println(destination + "-");
-            String source = codeLine[2];
             System.out.println(source);
             syntaxReader(orderSyn , destination , source);
         }
+        return lineNum;
+    }
+
+    public void resetFlag(){
+        data.setFlag("SF", 0);
+        data.setFlag("ZF", 0);
+        data.setFlag("PF", 0);
+        data.setFlag("CY", 0);
+        data.setFlag("OV", 0);
     }
 
     // public void debugCode(String codeData){
@@ -139,4 +202,6 @@ public class AssembellyLogic {
         }
         return res;
     }
+
+
 }
