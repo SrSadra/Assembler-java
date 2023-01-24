@@ -53,25 +53,54 @@
                           <menus>
                             <Menu mnemonicParsing="false" text="File">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="Close" />
+                                <MenuItem mnemonicParsing="false" onAction="#openProject" text="open file" />
+                                    <MenuItem mnemonicParsing="false" onAction="#saveProject" text="save file as" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Edit">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="Delete" />
+                                <MenuItem mnemonicParsing="false" text="undo" />
+                                    <MenuItem mnemonicParsing="false" text="redo" />
                               </items>
                             </Menu>
                             <Menu mnemonicParsing="false" text="Help">
                               <items>
-                                <MenuItem mnemonicParsing="false" text="About" />
+                                <MenuItem mnemonicParsing="false" text="About Us" />
+                                    <MenuItem mnemonicParsing="false" text="FAQ" />
                               </items>
                             </Menu>
                           </menus>
                         </MenuBar>
                         <HBox prefHeight="43.0" prefWidth="756.0">
                            <children>
-                              <HBox prefHeight="43.0" prefWidth="82.0" />
-                              <HBox prefHeight="43.0" prefWidth="184.0">
+                              <HBox prefHeight="43.0" prefWidth="82.0">
+                                 <children>
+                                    <Label onMouseClicked="#saveProject" prefHeight="30.0" prefWidth="22.0" text="💾" textFill="#009dff">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets top="6.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <Label onMouseClicked="#openProject" prefHeight="32.0" prefWidth="21.0" text="📂" textFill="#ffc300">
+                                       <font>
+                                          <Font size="18.0" />
+                                       </font>
+                                       <HBox.margin>
+                                          <Insets left="2.0" top="6.0" />
+                                       </HBox.margin>
+                                    </Label>
+                                    <ImageView fitHeight="30.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+                                       <image>
+                                          <Image url="@../pics/newprojicon.png" />
+                                       </image>
+                                       <HBox.margin>
+                                          <Insets top="9.0" />
+                                       </HBox.margin>
+                                    </ImageView>
+                                 </children></HBox>
+                              <HBox prefHeight="43.0" prefWidth="204.0">
                                  <children>
                                     <Label onMouseClicked="#onRunClick" prefHeight="0.0" prefWidth="25.0" style="-fx-label-padding: 5px;" text="▶" textAlignment="CENTER" textFill="#2bff00">
                                        <HBox.margin>
@@ -81,7 +110,7 @@
                                           <Font name="System Bold" size="27.0" />
                                        </font>
                                     </Label>
-                                    <MenuButton mnemonicParsing="false" prefHeight="22.0" prefWidth="152.0" style="-fx-background-color: grey;" text="Local Windows Debugger" textFill="WHITE">
+                                    <MenuButton mnemonicParsing="false" prefHeight="22.0" prefWidth="172.0" style="-fx-background-color: grey;" text="Local Windows Debugger" textFill="WHITE">
                                       <items>
                                         <MenuItem mnemonicParsing="false" onAction="#onRunClick" text="Run" />
                                         <MenuItem mnemonicParsing="false" onAction="#onDebugClick" text="Debug" />
@@ -102,7 +131,7 @@
                                           <Insets top="7.0" />
                                        </HBox.margin>
                                     </ImageView>
-                                    <Text fx:id="StopBP" fill="#ff5151" onMouseClicked="#onStopClick" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="24.799987316131592">
+                                    <Text fx:id="StopBP" fill="#1d96ff" onMouseClicked="#onStopClick" strokeType="OUTSIDE" strokeWidth="0.0" textAlignment="CENTER" wrappingWidth="24.799987316131592">
                                        <HBox.margin>
                                           <Insets top="7.0" />
                                        </HBox.margin>
@@ -287,7 +316,7 @@
                   <content>
                     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="771.0">
                            <children>
-                              <TextArea fx:id="codeArea" onInputMethodTextChanged="#onCodeTextCng" onKeyReleased="#onCodeTextCng" prefHeight="348.0" prefWidth="771.0" />
+                              <TextArea fx:id="codeArea" prefHeight="348.0" prefWidth="771.0" />
                            </children>
                         </AnchorPane>
                   </content>

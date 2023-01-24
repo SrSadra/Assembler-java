@@ -2,12 +2,6 @@ package com.example;
 
 import java.io.File;
 import java.io.IOException;
-
-import javax.swing.DefaultDesktopManager;
-import javax.swing.plaf.DesktopPaneUI;
-
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Hyperlink;
 import javafx.stage.FileChooser;
@@ -28,7 +22,7 @@ public class PrimaryController {
     }
 
     @FXML
-    public void openFile() throws IOException {
+    public void openFile() throws IOException { //open exciting project
         FileChooser chooser = new FileChooser();
         ExtensionFilter extFilter = new ExtensionFilter("TEXT files mannnnn (*.txt)", "*.txt");
         chooser.getExtensionFilters().add(extFilter);
@@ -38,10 +32,18 @@ public class PrimaryController {
     }
 
     @FXML
+    public void newproject() throws IOException { // create new project
+        switchToAssembler();
+
+    }
+
+    @FXML
     public void openHyperlink() throws IOException{
         Desktop des = Desktop.getDesktop();
         des.browse(java.net.URI.create("https://github.com/SrSadra"));
     }
+
+
 
 
 

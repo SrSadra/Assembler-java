@@ -4,16 +4,11 @@ import java.util.HashMap;
 
 public class Data {
 
-    //registers with hexadecimal values
-    // private int[] EAX;
-    // private int[] EBX;
-    private HashMap<String , int[]> variable;
     private HashMap<String , Register> register;
     private HashMap<String , Flag> flag;
     public HashMap<String , String> lastValue;
 
     Data(){
-        variable = new HashMap<>();
         register = new HashMap<>();
         flag = new HashMap<>();
         lastValue = new HashMap<>();
@@ -30,7 +25,7 @@ public class Data {
         setZeroRegFlg();
     }
 
-    public void setZeroRegFlg(){
+    public void setZeroRegFlg(){ //refreshing registers and flags
         String[] alph = {"a" , "b" , "c" , "d" };
         String[] flg = {"CY" , "PF" , "ZF" , "SF" , "OV"};
         for (int i = 0 ; i < 5 ; i++){
@@ -66,10 +61,6 @@ public class Data {
     }
 
 
-    // public String registerType(String reg){
-
-    // }
-
     public void initilizeReg(int[] res, String regNum){
         Register value = register.get(regNum);
         System.out.println("register name " + regNum);
@@ -102,7 +93,7 @@ public class Data {
         flag.put(name, myFlag);
     }
 
-    public int registerSize(String reg){
+    public int registerSize(String reg){ //register size (exmp: eax is 32bit so return 70 , ax is 16bit so return 30 and for 8bit return 10 or 12)
         if (regValue(reg) == null){
             return -1;
         }
@@ -121,7 +112,7 @@ public class Data {
         }
     }
 
-    public String registerType(String reg){
+    public String registerType(String reg){//registers 32bit name
         System.out.println(reg);
         if (register.get(reg) != null){
             return register.get(reg).getRegName();
@@ -154,14 +145,13 @@ public class Data {
             value = register.get(getRealName(reg)).getRegValue();
         }
         else {
-            value = variable.get(reg);
-            
+            value = null;
         }
-        System.out.println(value);
+        System.out.println("is that null?" + value);
         return value;
     }
 
-    public String regValuetoString(String reg){
+    public String regValuetoString(String reg){ //register array value to hexadecimal string
         int[] value = regValue(reg);
         String str = "";
         String digit;
@@ -183,7 +173,7 @@ public class Data {
         return flag.get(flags).getSet();
     }
 
-    public static int findLastDigit(int desType , int[] des , int srcType , int[] src){
+    public static int findLastDigit(int desType , int[] des , int srcType , int[] src){ //last digit of regisers or mem for flag calculation
         System.out.println("srctype is " + srcType + "destype is" + desType);
         int srcLast = 0;
         int desLast = 0;

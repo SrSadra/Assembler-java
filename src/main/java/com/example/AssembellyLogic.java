@@ -1,14 +1,7 @@
 package com.example;
-
-
-import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
-import model.OrderType;
-
 public class AssembellyLogic {
-    // Data data = new Data();
     private Instruction ins = new Instruction();
     private Breakpoint bp = new Breakpoint();
     private Data data = Instruction.data;
@@ -28,16 +21,16 @@ public class AssembellyLogic {
         bp.delBreakpoints(breakp);
     }
 
-    public void setZeroRegFlg(){
+    public void setZeroRegFlg(){ //refreshing all registers and flags and current line pointer
+        indCurr = -2;
         data.setZeroRegFlg();
     }
     
     
-    public void readCode(String codeData , int lineNum){
+    public int readCode(String codeData , int lineNum){//traverse on code lines
         if (codeData != null){
             codeTostring = codeData.split("\n");
         }
-        // if (lineNum == 0){
             int i = 0;
             if (indCurr != -2){
                 i = indCurr;
@@ -45,23 +38,18 @@ public class AssembellyLogic {
             for (; i < codeTostring.length ; i++){
                 int iPast = i;
                 i = codeDecoding(codeTostring[i] , i);
-                if (lineNum != 0 && bp.getBreakPoints() == iPast){
-                    // if (i != iPast){ //jmp occured
-                    // }
+                if (lineNum != 0 && bp.getBreakPoints() == iPast){ //debug line
                     indCurr = i + 1;
-                    return;
+                    return iPast;
                 }
                 if (i != codeTostring.length - 1){
                     resetFlag();
                 }
             }
-        // }
-        // else {
-        //     codeDecoding(codeTostring[indBreak] , );
-        // }
+            return -1;
     }
 
-    public void setIndBreak(int num){
+    public void setIndBreak(int num){ //set breakpoints index
         bp.setIndBreak(num);
     }
 
@@ -71,7 +59,7 @@ public class AssembellyLogic {
 
 
 
-    public int codeDecoding(String codeTmp , int lineNum){                
+    public int codeDecoding(String codeTmp , int lineNum){//decoding line of code and pass every element to appropriate function            
         String[] codeLine = new String[4];
         String regex = "\\s+";
         codeTmp = codeTmp.replaceAll(regex, " ");
@@ -102,7 +90,7 @@ public class AssembellyLogic {
             labelBp.put(labelStr, bp.lastBp(lineNum)); //last breakpoint before label
         }
         if (orderSyn.equals("comment")){
-            //comment func
+            //comment func coming soon...
         }
         else if (orderSyn.equals("jmp")){
             bp.setIndBreak(labelBp.get(destination));
@@ -126,14 +114,7 @@ public class AssembellyLogic {
         data.setFlag("OV", 0);
     }
 
-    // public void debugCode(String codeData){
-    //     for (int i = 0 ; i < breakPoints.size() ; i++){
-    //         int lineNum = breakPoints.get(i);
-    //         readCode(codeData, lineNum);
-    //     }
-    // }
-
-    public void syntaxReader(String syn , String destination , String source ){
+    public void syntaxReader(String syn , String destination , String source ){ //passing source and destination to appropriate instruction
         switch (syn){
             case "add":
             ins.addFunc(destination, source);
@@ -155,7 +136,7 @@ public class AssembellyLogic {
 
     
 
-    public String regValue(String reg){
+    public String regValue(String reg){ //get register value 
         return data.regValuetoString(reg);
     }
 
@@ -163,7 +144,7 @@ public class AssembellyLogic {
         return data.flagValue(flag);
     }
 
-    public static int[] baseConverter(String numb){
+    public static int[] baseConverter(String numb){ //convert numbers on every base to 8 size array (digits like A in hexadecimal will conver to 10 in array)
         int[] res = new int[8];
         String radix = numb.substring(numb.length() - 1);
         numb = numb.substring(0 , numb.length() - 1);

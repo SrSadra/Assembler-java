@@ -18,7 +18,7 @@ public class Breakpoint {
         return breakPoints.get(indBreak);
     }
 
-    public int lastBp(int lineNum){
+    public int lastBp(int lineNum){ //last breakpoint after this line
         int lastlineBp = 0;
         for (int i = 0 ; i < breakPoints.size() ; i++){
             if (lineNum < breakPoints.get(i)){
@@ -33,9 +33,9 @@ public class Breakpoint {
         return breakPoints.size();
     }
 
-    public boolean updateBreakPoints(){
+    public boolean updateBreakPoints(){ //update breakpoint index (if breakpoints finished then return false)
         indBreak += 1;
-        if (indBreak == breakPoints.size() + 1){
+        if (indBreak == breakPoints.size()){
             indBreak = 0;
             return false;
         }

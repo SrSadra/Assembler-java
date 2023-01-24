@@ -1,17 +1,15 @@
 package com.example;
-
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Instruction {
 
-    static Data data; //problem static?
+    static Data data;//making just one object of data
 
     Instruction(){
         data = new Data();
     }
 
-    public HashMap<String , Object> init(String destination , String source){
+    public HashMap<String , Object> init(String destination , String source){ //inisializing destination and source register/mem and their types
         HashMap<String , Object> hm = new HashMap<>();
         int desType = data.registerSize(destination); 
         String desNum = data.registerType(destination);
@@ -41,17 +39,7 @@ public class Instruction {
         int[] src = (int[]) hmData.get("src");
         int srcType = (int) hmData.get("srcType");
         int[] des = (int[]) hmData.get("des");
-        System.out.println("src" + srcType + "des" + desType);
         int i = desType % 10 , k = srcType != -1 ? srcType % 10 : 0;
-        System.out.println(desType);
-        int[] edx = data.regValue("edx");
-            // if (desType == 42){
-            //     i = 2;
-            // }
-            // System.out.println(srcType);
-            // if (srcType == 42){
-            //     k = 2;
-            // }
             for (int ind = 7 ; ind >= 0 ; ind--){
                 System.out.println("i" + i + "ind " + ind + "k" + k);
                 des[ind - i] = src[ind - k];
@@ -182,7 +170,7 @@ public class Instruction {
                 break;
             }
         }
-        data.initilizeReg(des, desNum);
+        data.initilizeReg(des, desNum); //updating destination 
     }
     
     public void orFunc(String destination , String source){
@@ -204,9 +192,4 @@ public class Instruction {
         }
         data.initilizeReg(des, desNum);
     }
-
-
-    // public ArrayList<Object> initializing(string ){
-
-    // }
 }

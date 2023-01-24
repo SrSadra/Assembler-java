@@ -3,6 +3,8 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Hyperlink?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.text.Font?>
@@ -15,7 +17,7 @@
             <Font name="Arial Rounded MT Bold" size="32.0" />
          </font>
       </Text>
-      <Text fill="WHITE" layoutX="61.0" layoutY="154.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Best Ide for ammoo esi &amp; you" wrappingWidth="299.47008514404297">
+      <Text fill="WHITE" layoutX="60.0" layoutY="245.0" strokeType="OUTSIDE" strokeWidth="0.0" text="an easy user friendly ide for starting assembly language" wrappingWidth="367.47008514404297">
          <font>
             <Font size="17.0" />
          </font>
@@ -27,12 +29,15 @@
       </Text>
       <HBox layoutX="584.0" layoutY="176.0" onMouseClicked="#openFile" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b; -fx-background-radius: 5px;">
          <children>
-            <Text fill="#ffea00" strokeType="OUTSIDE" strokeWidth="0.0" text="📁" textAlignment="CENTER" wrappingWidth="62.66998291015625">
-               <font>
-                  <Font size="41.0" />
-               </font>
-            </Text>
-            <Label prefHeight="66.0" prefWidth="194.0" style="-fx-wrap-text: 2px;" text="Open File" textFill="WHITE">
+            <ImageView fitHeight="57.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pics/openfileicon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="5.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label prefHeight="63.0" prefWidth="214.0" style="-fx-wrap-text: 2px;" text="Open a local folder" textFill="WHITE">
                <font>
                   <Font name="Berlin Sans FB" size="20.0" />
                </font>
@@ -42,26 +47,40 @@
             </Label>
          </children>
       </HBox>
-      <HBox layoutX="584.0" layoutY="262.0" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b; -fx-background-radius: 5px;">
+      <HBox layoutX="584.0" layoutY="262.0" onMouseClicked="#newproject" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b; -fx-background-radius: 5px;">
          <children>
-            <Text fill="#ffea00" strokeType="OUTSIDE" strokeWidth="0.0" text="📁" textAlignment="CENTER" wrappingWidth="62.66998291015625">
+            <ImageView fitHeight="52.0" fitWidth="57.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../pics/newprojicon.png" />
+               </image>
+               <HBox.margin>
+                  <Insets top="6.0" />
+               </HBox.margin>
+            </ImageView>
+            <Label prefHeight="58.0" prefWidth="194.0" text="Create a new project" textFill="WHITE">
                <font>
-                  <Font size="41.0" />
-               </font>
-            </Text>
-            <Label prefHeight="66.0" prefWidth="194.0" />
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font></Label>
          </children>
       </HBox>
       <HBox layoutX="583.0" layoutY="351.0" prefHeight="63.0" prefWidth="269.0" style="-fx-background-color: #6e6d6b; -fx-background-radius: 5px;">
          <children>
-            <Text fill="#ffea00" strokeType="OUTSIDE" strokeWidth="0.0" text="📁" textAlignment="CENTER" wrappingWidth="62.66998291015625">
+            <Text fill="#ffc758" strokeType="OUTSIDE" strokeWidth="0.0" text="❓" textAlignment="CENTER" wrappingWidth="56.27001953125">
                <font>
                   <Font size="41.0" />
                </font>
             </Text>
-            <Label prefHeight="66.0" prefWidth="194.0" />
+            <Label prefHeight="66.0" prefWidth="194.0" text="FAQ" textFill="WHITE">
+               <font>
+                  <Font name="Berlin Sans FB" size="20.0" />
+               </font></Label>
          </children>
       </HBox>
       <Hyperlink fx:id="hyperLink" layoutX="641.0" layoutY="439.0" onAction="#openHyperlink" prefHeight="24.0" prefWidth="149.0" text="More products on github" textAlignment="CENTER" />
+      <Text fill="WHITE" layoutX="59.0" layoutY="159.0" strokeType="OUTSIDE" strokeWidth="0.0" text="yoyo welcome to our first version of Assembully Studio 2023. Our hope is to bully you with assembely syntaxes &amp; make your mind explode" wrappingWidth="367.47008514404297">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Text>
    </children>
 </AnchorPane>
