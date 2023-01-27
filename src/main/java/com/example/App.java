@@ -26,7 +26,7 @@ public class App extends Application {
         // mediaplayer.setAutoPlay(true);
         scene = new Scene(loadFXML("startlogo"), 900, 600);
         stage.setTitle("Assembully Studio 2023");
-        stage.getIcons().add(new Image("file:D:\\assembler\\demo\\src\\main\\resources\\com\\pics\\icon.png"));
+        stage.getIcons().add(new Image("file:src\\main\\resources\\com\\pics\\icon.png"));
         stage.setScene(scene);
         stage.setResizable(false);
         stage.show();

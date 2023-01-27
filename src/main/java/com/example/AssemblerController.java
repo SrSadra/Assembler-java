@@ -235,7 +235,7 @@ public class AssemblerController extends Stage implements Initializable {
     }
 
     public void paths(){ 
-        contBPImage = new Image("file:D:\\assembler\\demo\\src\\main\\resources\\com\\pics\\nextarrow.png");
+        contBPImage = new Image("file:src\\main\\resources\\com\\pics\\nextarrow.png");
         contBP.setImage(contBPImage);
         StopBP.setText("◻");
         retBP.setText("⟲");
