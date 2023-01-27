@@ -8,13 +8,13 @@ more feature:
 * save project
 * open project from desired path
 
-## app environment
+### app environment
 
-# firstMenu
+#### firstMenu
 ![alt text](https://github.com/SrSadra/Assembler-java/image/1.png?raw=true)
 
-# codeEnv
+#### codeEnv
 ![alt text](https://github.com/SrSadra/Assembler-java/image/2.png?raw=true)
 
-## running app
+### running app
 just clone the repo and run the "app.java"
