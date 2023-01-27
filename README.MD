@@ -11,10 +11,10 @@ more feature:
 ### app environment
 
 #### firstMenu
-![alt text](https://github.com/SrSadra/Assembler-java/image/1.png?raw=true)
+![alt text](https://github.com/SrSadra/Assembler-java/images/1.png?raw=true)
 
 #### codeEnv
-![alt text](https://github.com/SrSadra/Assembler-java/image/2.png?raw=true)
+![alt text](https://github.com/SrSadra/Assembler-java/images/2.png?raw=true)
 
 ### running app
 just clone the repo and run the "app.java"
